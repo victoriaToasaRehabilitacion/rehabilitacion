@@ -927,6 +927,21 @@
       border-color: #475569;
     }
 
+    /* FONDO MORADO - PANEL DEL MÉDICO (para diferenciarlo del resto de paneles) */
+    .doctor-purple .sidebar {
+      background: linear-gradient(180deg, var(--morado) 0%, #6D28D9 100%);
+    }
+
+    .doctor-purple .dashboard-main {
+      background: var(--morado-soft);
+    }
+
+    .doctor-purple .stat-box,
+    .doctor-purple .card,
+    .doctor-purple .data-table-container {
+      border-color: rgba(139, 92, 246, 0.25);
+    }
+
     @media(max-width: 860px) {
       .dashboard-layout { grid-template-columns: 1fr; }
       .sidebar { display: none; }
@@ -1072,9 +1087,9 @@
     adminView: "assignments"
   };
 
-  let state = JSON.parse(localStorage.getItem("movifyState_v5") || "null") || defaultState;
+  let state = JSON.parse(localStorage.getItem("movifyState_v6") || "null") || defaultState;
 
-  function save() { localStorage.setItem("movifyState_v5", JSON.stringify(state)); }
+  function save() { localStorage.setItem("movifyState_v6", JSON.stringify(state)); }
 
   /* -------------------------------------------------------------
      SISTEMA DE RETROALIMENTACIÓN HÁPTICA Y SONIDO DE BURBUJA
@@ -2080,7 +2095,7 @@
     const myPatients = state.patients.filter(p => (p.doctorIds || []).includes(currentDoc.id));
 
     return `
-      <section class="screen">
+      <section class="screen doctor-purple">
         <div class="dashboard-layout">
           <aside class="sidebar">
             <div class="sidebar-brand">
