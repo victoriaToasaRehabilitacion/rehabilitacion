@@ -8,6 +8,10 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="assets/app_icon_simple_cyan.png">
   
+  <!-- PRECONECTAR YOUTUBE PARA CARGA INSTANTÁNEA SIN DEMORAS -->
+  <link rel="preconnect" href="https://www.youtube-nocookie.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
+  
   <!-- TIPOGRAFÍA OFICIAL DEL BRANDING: Montserrat (Títulos/Botones) e Inter (Cuerpo) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -603,6 +607,190 @@
       margin: 14px 0 18px;
       border: 1px dashed rgba(0, 136, 148, 0.35);
       text-align: left;
+    }
+
+    /* BOTÓN Y MODAL DE RUMBATERAPIA (ZUMBA SENIOR) */
+    .rumba-card {
+      position: relative;
+      background: linear-gradient(135deg, #FF6565 0%, #FF8E53 50%, #F59E0B 100%);
+      color: #FFFFFF;
+      border-radius: 20px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px rgba(255, 101, 101, 0.28);
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    .rumba-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(255, 101, 101, 0.4);
+    }
+    .rumba-card:active {
+      transform: scale(0.98);
+    }
+    .rumba-card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 170px;
+      height: 170px;
+      background: radial-gradient(circle, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 70%);
+      pointer-events: none;
+    }
+    .rumba-card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      animation: rumbaBounce 2.4s infinite ease-in-out;
+    }
+    @keyframes rumbaBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-3px) rotate(4deg); }
+    }
+    .rumba-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .rumba-card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.18);
+      padding: 3px 8px;
+      border-radius: 12px;
+      margin-bottom: 4px;
+    }
+    .rumba-card-title {
+      font-family: var(--font-title);
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 0 0 3px 0;
+      color: #FFFFFF;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    }
+    .rumba-card-subtitle {
+      font-size: 13px;
+      line-height: 1.35;
+      opacity: 0.94;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .rumba-card-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .rumba-play-pill {
+      background: #FFFFFF;
+      color: #DE4371;
+      font-family: var(--font-title);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      white-space: nowrap;
+    }
+    .rumba-play-pill span.icon {
+      font-size: 13px;
+    }
+
+    /* MODAL TEATRO DE RUMBATERAPIA */
+    .rumba-modal-content {
+      position: relative;
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 20px;
+      max-width: 680px;
+      width: 100%;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+      animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .rumba-player-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      margin: 14px 0;
+    }
+    .rumba-player-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .rumba-tips-box {
+      background: var(--verde-vitalidad-light);
+      border: 1px solid rgba(0, 136, 148, 0.2);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--azul-profundo);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .rumba-selector {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+    .rumba-opt-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--azul-profundo);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .rumba-opt-btn.active {
+      border-color: #FF6565;
+      background: #FFF5F5;
+      color: #DE4371;
     }
 
     /* DASHBOARDS ADMIN Y DOCTOR */
@@ -2038,9 +2226,22 @@
             </div>
           </div>
 
-          <button class="btn btn-primary" style="width:100%;margin-bottom:24px;font-size:17px" onclick="startRoutine()">
+          <button class="btn btn-primary" style="width:100%;margin-bottom:14px;font-size:17px" onclick="startRoutine()">
             ▶ Iniciar mi rutina con música y voz
           </button>
+
+          <!-- BOTÓN Y TARJETA DE RUMBATERAPIA (ZUMBA SENIOR Y BAILETERAPIA) -->
+          <div class="rumba-card" onclick="openRumbaterapiaModal()" role="button" tabindex="0" title="Ver clase de Rumbaterapia y Zumba en YouTube">
+            <div class="rumba-card-icon">💃</div>
+            <div class="rumba-card-info">
+              <div class="rumba-card-tag">🔥 Rumbaterapia y Baile · YouTube</div>
+              <h3 class="rumba-card-title">Zumba y Rumbaterapia Senior</h3>
+              <p class="rumba-card-subtitle">Música alegre, bajo impacto y movimiento suave para tus articulaciones.</p>
+            </div>
+            <div class="rumba-card-action">
+              <span class="rumba-play-pill"><span class="icon">▶</span> Bailar</span>
+            </div>
+          </div>
 
           <div class="section-title">
             <h2>Categorías de Ejercicios</h2>
@@ -2885,6 +3086,127 @@
     toast(`Doctor ${name} añadido`);
   }
 
+  /* -------------------------------------------------------------
+     MÓDULO DE RUMBATERAPIA (ZUMBA SENIOR Y BAILETERAPIA)
+     Carga diferida ultrarrápida (Facade Pattern) para máxima velocidad
+     ------------------------------------------------------------- */
+  const rumbaVideos = [
+    {
+      id: "Ri2SZ3pyWMw",
+      title: "Clase de Zumba Gold (De Pie y Suave)",
+      channel: "Respirar para Sanar",
+      type: "💃 De Pie",
+      desc: "Ritmos latinos alegres (salsa, cumbia, merengue) con pasos suaves sin saltos."
+    },
+    {
+      id: "R-6PMBp-wzE",
+      title: "Zumba Adaptada en Silla (Cero Impacto)",
+      channel: "Respirar para Sanar",
+      type: "🪑 En Silla",
+      desc: "Bailoterapia sentada ideal para personas con artrosis o problemas de rodilla."
+    }
+  ];
+
+  let currentRumbaIndex = 0;
+  let wasMusicPlayingBeforeRumba = false;
+
+  function openRumbaterapiaModal(index = 0) {
+    currentRumbaIndex = index;
+    const v = rumbaVideos[currentRumbaIndex];
+
+    // Pausar música de fondo de la app para no mezclar audios
+    wasMusicPlayingBeforeRumba = bgAudio && !bgAudio.paused;
+    if (wasMusicPlayingBeforeRumba) {
+      pauseBackgroundMusic();
+    }
+
+    const modal = document.createElement("div");
+    modal.id = "rumba-modal";
+    modal.className = "modal-overlay show";
+    modal.style.zIndex = "99999";
+    modal.style.display = "flex";
+    modal.style.alignItems = "center";
+    modal.style.justifyContent = "center";
+    modal.style.padding = "16px";
+
+    modal.innerHTML = `
+      <div class="rumba-modal-content">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+          <div>
+            <span class="rumba-card-tag" style="background:#FFE4E6;color:#DE4371">💃 Rumbaterapia Activa</span>
+            <h2 style="font-family:var(--font-title);font-size:20px;color:var(--azul-profundo);margin:4px 0 2px" id="rumba-modal-title">${v.title}</h2>
+            <small style="color:var(--muted)">Canal: <b>${v.channel}</b> · YouTube</small>
+          </div>
+          <button class="iconbtn" onclick="closeRumbaterapiaModal()" style="font-size:20px;width:38px;height:38px;border-radius:50%">✕</button>
+        </div>
+
+        <div class="rumba-selector">
+          ${rumbaVideos.map((item, idx) => `
+            <button type="button" class="rumba-opt-btn ${idx === currentRumbaIndex ? "active" : ""}" onclick="switchRumbaVideo(${idx})">
+              ${item.type} · ${item.title.split("(")[0]}
+            </button>
+          `).join("")}
+        </div>
+
+        <div class="rumba-player-wrapper" id="rumba-player-container">
+          <iframe 
+            src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1" 
+            title="${v.title}" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div class="rumba-tips-box">
+          <div style="font-weight:700">💡 Consejos para una sesión segura y divertida:</div>
+          <div>• Baila a tu propio ritmo. Si te cansas, puedes sentarte o descansar en cualquier momento.</div>
+          <div>• Mantén un vaso de agua cerca y realiza movimientos amplios pero suaves.</div>
+        </div>
+
+        <button class="btn btn-vitalidad" style="width:100%;font-size:16px" onclick="closeRumbaterapiaModal()">
+          ✓ Finalizar Baile y Volver
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+    speak("¡A disfrutar de la rumbaterapia! Muévete a tu ritmo con alegría.");
+  }
+
+  function switchRumbaVideo(index) {
+    currentRumbaIndex = index;
+    const v = rumbaVideos[currentRumbaIndex];
+    const titleEl = document.getElementById("rumba-modal-title");
+    if (titleEl) titleEl.textContent = v.title;
+
+    const btns = document.querySelectorAll(".rumba-opt-btn");
+    btns.forEach((b, i) => b.classList.toggle("active", i === index));
+
+    const container = document.getElementById("rumba-player-container");
+    if (container) {
+      container.innerHTML = `
+        <iframe 
+          src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1" 
+          title="${v.title}" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+        </iframe>
+      `;
+    }
+  }
+
+  function closeRumbaterapiaModal() {
+    const modal = document.getElementById("rumba-modal");
+    if (modal) {
+      const iframe = modal.querySelector("iframe");
+      if (iframe) iframe.src = "";
+      modal.remove();
+    }
+    if (wasMusicPlayingBeforeRumba && state.music) {
+      resumeBackgroundMusic();
+    }
+  }
+
   // EXPORTAR AL ALCANCE GLOBAL
   window.go = go;
   window.routine = routine;
@@ -2922,6 +3244,9 @@
   window.pickRandomProfiles = pickRandomProfiles;
   window.toggleDemoMode = toggleDemoMode;
   window.DEMO_CONFIG = DEMO_CONFIG;
+  window.openRumbaterapiaModal = openRumbaterapiaModal;
+  window.closeRumbaterapiaModal = closeRumbaterapiaModal;
+  window.switchRumbaVideo = switchRumbaVideo;
 
   render();
 </script>
