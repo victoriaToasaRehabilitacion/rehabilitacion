@@ -793,6 +793,166 @@
       color: #DE4371;
     }
 
+    /* =============================================================
+       MODO ENFOQUE VERTICAL (ZOOM A LOS 4 SEGUNDOS - RUMBATERAPIA)
+       ============================================================= */
+    .rumba-zoomed-vertical {
+      background: rgba(0, 0, 0, 0.96) !important;
+      padding: 0 !important;
+    }
+    .rumba-zoomed-vertical .rumba-modal-content {
+      height: 100vh !important;
+      height: 100dvh !important;
+      max-height: 100vh !important;
+      width: 100vw !important;
+      max-width: min(540px, 100vw) !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      background: #000000 !important;
+      box-shadow: 0 0 60px rgba(0,0,0,0.9) !important;
+      border: none !important;
+      display: flex !important;
+      flex-direction: column !important;
+      position: relative !important;
+      overflow: hidden !important;
+      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .rumba-zoomed-vertical .rumba-modal-header-standard,
+    .rumba-zoomed-vertical #rumba-selector-bar,
+    .rumba-zoomed-vertical .rumba-tips-box,
+    .rumba-zoomed-vertical .rumba-footer-btn-standard {
+      display: none !important;
+    }
+    .rumba-zoomed-vertical .rumba-player-wrapper {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      aspect-ratio: auto !important;
+      background: #000000 !important;
+      overflow: hidden !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .rumba-zoomed-vertical .rumba-player-wrapper iframe {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(1.05) !important;
+      height: 104vh !important;
+      height: 104dvh !important;
+      width: calc(104vh * 16 / 9) !important;
+      width: calc(104dvh * 16 / 9) !important;
+      max-width: none !important;
+      border: 0 !important;
+      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    /* CONTROLES FLOTANTES EN MODO VERTICAL */
+    .rumba-vertical-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 16px;
+    }
+    .rumba-zoomed-vertical .rumba-vertical-overlay {
+      display: flex !important;
+    }
+    .rumba-overlay-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+    .rumba-overlay-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: auto;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.88) 100%);
+      padding: 24px 12px 14px;
+      border-radius: 20px;
+    }
+    .rumba-badge-vertical {
+      background: rgba(0, 0, 0, 0.68);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rumba-badge-vertical .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      box-shadow: 0 0 8px #10B981;
+      animation: rumbaDotPulse 1.5s infinite;
+    }
+    @keyframes rumbaDotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .rumba-btn-close-vertical {
+      background: rgba(239, 68, 68, 0.92);
+      color: #FFFFFF;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-family: var(--font-title);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.2s;
+    }
+    .rumba-btn-close-vertical:hover {
+      transform: scale(1.05);
+      background: #DC2626;
+    }
+    .rumba-btn-toggle-zoom {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      color: #FFFFFF;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .rumba-countdown-toast {
+      background: rgba(0, 136, 148, 0.9);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      animation: fadeIn 0.3s ease;
+      white-space: nowrap;
+    }
+
     /* DASHBOARDS ADMIN Y DOCTOR */
     .dashboard-layout {
       display: grid;
@@ -3111,9 +3271,30 @@
 
   let currentRumbaIndex = 0;
   let wasMusicPlayingBeforeRumba = false;
+  let rumbaZoomTimer = null;
+  let isRumbaZoomed = false;
+
+  function activateRumbaVerticalZoom() {
+    const modal = document.getElementById("rumba-modal");
+    if (!modal) return;
+    isRumbaZoomed = true;
+    modal.classList.add("rumba-zoomed-vertical");
+    const ind = document.getElementById("rumba-zoom-indicator");
+    if (ind) ind.style.display = "none";
+    toast("↕️ Enfoque Vertical: Profesor en pantalla completa");
+  }
+
+  function toggleRumbaVerticalZoom() {
+    const modal = document.getElementById("rumba-modal");
+    if (!modal) return;
+    isRumbaZoomed = !isRumbaZoomed;
+    modal.classList.toggle("rumba-zoomed-vertical", isRumbaZoomed);
+    toast(isRumbaZoomed ? "Modo Vertical Activado" : "Vista Completa Activada");
+  }
 
   function openRumbaterapiaModal(index = 0) {
     currentRumbaIndex = index;
+    isRumbaZoomed = false;
     const v = rumbaVideos[currentRumbaIndex];
 
     // Pausar música de fondo de la app para no mezclar audios
@@ -3122,9 +3303,17 @@
       pauseBackgroundMusic();
     }
 
+    // Cancelar cualquier temporizador previo
+    if (rumbaZoomTimer) clearTimeout(rumbaZoomTimer);
+
+    // Programar la expansión con zoom vertical exactamente a los 4 segundos
+    rumbaZoomTimer = setTimeout(() => {
+      activateRumbaVerticalZoom();
+    }, 4000);
+
     const modal = document.createElement("div");
     modal.id = "rumba-modal";
-    modal.className = "modal-overlay show";
+    modal.className = "modal-overlay show rumba-modal-overlay";
     modal.style.zIndex = "99999";
     modal.style.display = "flex";
     modal.style.alignItems = "center";
@@ -3133,16 +3322,21 @@
 
     modal.innerHTML = `
       <div class="rumba-modal-content">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <!-- CABECERA ESTÁNDAR (PRIMEROS 4 SEGUNDOS) -->
+        <div class="rumba-modal-header-standard" style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
           <div>
             <span class="rumba-card-tag" style="background:#FFE4E6;color:#DE4371">💃 Rumbaterapia Activa</span>
             <h2 style="font-family:var(--font-title);font-size:20px;color:var(--azul-profundo);margin:4px 0 2px" id="rumba-modal-title">${v.title}</h2>
             <small style="color:var(--muted)">Canal: <b>${v.channel}</b> · YouTube</small>
           </div>
-          <button class="iconbtn" onclick="closeRumbaterapiaModal()" style="font-size:20px;width:38px;height:38px;border-radius:50%">✕</button>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span id="rumba-zoom-indicator" class="rumba-countdown-toast">↕️ Zoom vertical en 4s</span>
+            <button class="iconbtn" onclick="closeRumbaterapiaModal()" style="font-size:20px;width:38px;height:38px;border-radius:50%">✕</button>
+          </div>
         </div>
 
-        <div class="rumba-selector">
+        <!-- SELECTOR ESTÁNDAR -->
+        <div class="rumba-selector" id="rumba-selector-bar">
           ${rumbaVideos.map((item, idx) => `
             <button type="button" class="rumba-opt-btn ${idx === currentRumbaIndex ? "active" : ""}" onclick="switchRumbaVideo(${idx})">
               ${item.type} · ${item.title.split("(")[0]}
@@ -3150,6 +3344,7 @@
           `).join("")}
         </div>
 
+        <!-- CONTENEDOR DEL VIDEO CON ZOOM VERTICAL -->
         <div class="rumba-player-wrapper" id="rumba-player-container">
           <iframe 
             src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&start=${v.start || 0}&rel=0&modestbranding=1&playsinline=1" 
@@ -3159,20 +3354,51 @@
           </iframe>
         </div>
 
-        <div class="rumba-tips-box">
-          <div style="font-weight:700">💡 Consejos para una sesión segura y divertida:</div>
-          <div>• Baila a tu propio ritmo. Si te cansas, puedes sentarte o descansar en cualquier momento.</div>
-          <div>• Mantén un vaso de agua cerca y realiza movimientos amplios pero suaves.</div>
+        <!-- CONTROLES FLOTANTES EN MODO VERTICAL -->
+        <div class="rumba-vertical-overlay">
+          <div class="rumba-overlay-top">
+            <span class="rumba-badge-vertical">
+              <span class="pulse-dot"></span> 💃 Enfoque Vertical (Profesor)
+            </span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <button type="button" class="rumba-btn-toggle-zoom" onclick="toggleRumbaVerticalZoom()" title="Alternar entre Zoom Vertical y Vista Completa">
+                ↕️ Ajustar
+              </button>
+              <button type="button" class="rumba-btn-close-vertical" onclick="closeRumbaterapiaModal()">
+                ✕ Salir
+              </button>
+            </div>
+          </div>
+
+          <div class="rumba-overlay-bottom">
+            <div style="display:flex;gap:8px;justify-content:center">
+              ${rumbaVideos.map((item, idx) => `
+                <button type="button" class="rumba-opt-btn ${idx === currentRumbaIndex ? "active" : ""}" style="background:rgba(0,0,0,0.65);color:#fff;border-color:rgba(255,255,255,0.35);padding:6px 14px;font-size:12px" onclick="switchRumbaVideo(${idx})">
+                  ${item.type} · ${item.title.split("(")[0]}
+                </button>
+              `).join("")}
+            </div>
+            <div style="color:rgba(255,255,255,0.92);font-size:11px;text-align:center">
+              💡 Vista vertical completa: laterales recortados para enfocar al profesor en pantalla grande.
+            </div>
+          </div>
         </div>
 
-        <button class="btn btn-vitalidad" style="width:100%;font-size:16px" onclick="closeRumbaterapiaModal()">
+        <!-- CONSEJOS ESTÁNDAR -->
+        <div class="rumba-tips-box">
+          <div style="font-weight:700">💡 Consejos para una sesión segura y divertida:</div>
+          <div>• En 4 segundos el video se expandirá automáticamente en vertical para enfocarse en el profesor.</div>
+          <div>• Baila a tu propio ritmo. Si te cansas, puedes sentarte o descansar en cualquier momento.</div>
+        </div>
+
+        <button class="btn btn-vitalidad rumba-footer-btn-standard" style="width:100%;font-size:16px" onclick="closeRumbaterapiaModal()">
           ✓ Finalizar Baile y Volver
         </button>
       </div>
     `;
 
     document.body.appendChild(modal);
-    speak("¡A disfrutar de la rumbaterapia! Muévete a tu ritmo con alegría.");
+    speak("¡A disfrutar de la rumbaterapia! En 4 segundos se ajustará en vertical para ver mejor al profesor.");
   }
 
   function switchRumbaVideo(index) {
@@ -3182,7 +3408,7 @@
     if (titleEl) titleEl.textContent = v.title;
 
     const btns = document.querySelectorAll(".rumba-opt-btn");
-    btns.forEach((b, i) => b.classList.toggle("active", i === index));
+    btns.forEach((b, i) => b.classList.toggle("active", i === index % rumbaVideos.length));
 
     const container = document.getElementById("rumba-player-container");
     if (container) {
@@ -3198,6 +3424,12 @@
   }
 
   function closeRumbaterapiaModal() {
+    if (rumbaZoomTimer) {
+      clearTimeout(rumbaZoomTimer);
+      rumbaZoomTimer = null;
+    }
+    isRumbaZoomed = false;
+
     const modal = document.getElementById("rumba-modal");
     if (modal) {
       const iframe = modal.querySelector("iframe");
@@ -3249,6 +3481,8 @@
   window.openRumbaterapiaModal = openRumbaterapiaModal;
   window.closeRumbaterapiaModal = closeRumbaterapiaModal;
   window.switchRumbaVideo = switchRumbaVideo;
+  window.activateRumbaVerticalZoom = activateRumbaVerticalZoom;
+  window.toggleRumbaVerticalZoom = toggleRumbaVerticalZoom;
 
   render();
 </script>
