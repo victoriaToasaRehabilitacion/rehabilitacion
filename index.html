@@ -3096,14 +3096,16 @@
       title: "Clase de Zumba Gold (De Pie y Suave)",
       channel: "Respirar para Sanar",
       type: "💃 De Pie",
-      desc: "Ritmos latinos alegres (salsa, cumbia, merengue) con pasos suaves sin saltos."
+      desc: "Ritmos latinos alegres (salsa, cumbia, merengue) con pasos suaves sin saltos.",
+      start: 33
     },
     {
       id: "R-6PMBp-wzE",
       title: "Zumba Adaptada en Silla (Cero Impacto)",
       channel: "Respirar para Sanar",
       type: "🪑 En Silla",
-      desc: "Bailoterapia sentada ideal para personas con artrosis o problemas de rodilla."
+      desc: "Bailoterapia sentada ideal para personas con artrosis o problemas de rodilla.",
+      start: 24
     }
   ];
 
@@ -3150,7 +3152,7 @@
 
         <div class="rumba-player-wrapper" id="rumba-player-container">
           <iframe 
-            src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1" 
+            src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&start=${v.start || 0}&rel=0&modestbranding=1&playsinline=1" 
             title="${v.title}" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen>
@@ -3186,7 +3188,7 @@
     if (container) {
       container.innerHTML = `
         <iframe 
-          src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1" 
+          src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&start=${v.start || 0}&rel=0&modestbranding=1&playsinline=1" 
           title="${v.title}" 
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
           allowfullscreen>
