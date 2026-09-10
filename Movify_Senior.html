@@ -1005,6 +1005,17 @@
 <div id="intro-container"></div>
 
 <script>
+  /* =========================================================================
+     MODO DE PRUEBAS / ROTACIÓN ALEATORIA DE PERFILES (DESARROLLO & DEMO)
+     -------------------------------------------------------------------------
+     INSTRUCCIÓN PARA FUTURA INTEGRACIÓN EN PRODUCCIÓN:
+     - Para pasar a producción con usuarios reales, simplemente cambia:
+         const DEMO_TESTING_MODE = false;
+     - Para reactivar la rotación aleatoria de perfiles de prueba:
+         const DEMO_TESTING_MODE = true;
+     ========================================================================= */
+  const DEMO_TESTING_MODE = true;
+
   /* -------------------------------------------------------------
      BASE DE DATOS Y ESTADO: NOMBRES EN INGLÉS CON APELLIDOS EN ESPAÑOL
      ------------------------------------------------------------- */
@@ -1360,11 +1371,209 @@
   };
 
   /* ----------------------------------------------------------------
+     SISTEMA DE ROTACIÓN ALEATORIA DE PERFILES DE PRUEBA (MÉDICOS Y PACIENTES)
+     ---------------------------------------------------------------- */
+  const DEMO_CONFIG = {
+    enabled: DEMO_TESTING_MODE,
+    get isTesting() {
+      if (!this.enabled) return false;
+      const stored = localStorage.getItem("movify_demo_testing_active");
+      return stored !== null ? stored === "true" : true;
+    },
+    set isTesting(val) {
+      localStorage.setItem("movify_demo_testing_active", String(val));
+    }
+  };
+
+  let currentPatientIndex = -1;
+  let currentDoctorIndex = -1;
+
+  function getRandomIndex(total, currentIndex) {
+    if (total <= 1) return 0;
+    let idx;
+    do {
+      idx = Math.floor(Math.random() * total);
+    } while (idx === currentIndex);
+    return idx;
+  }
+
+  function pickRandomProfiles() {
+    const pList = state.patients || [];
+    const dList = state.doctors || [];
+    if (pList.length > 0) {
+      currentPatientIndex = getRandomIndex(pList.length, currentPatientIndex);
+    }
+    if (dList.length > 0) {
+      currentDoctorIndex = getRandomIndex(dList.length, currentDoctorIndex);
+    }
+  }
+
+  function rotateProfile(role) {
+    const targetRole = role || selectedTab;
+    if (targetRole === "patient") {
+      const pList = state.patients || [];
+      if (pList.length > 0) {
+        currentPatientIndex = (currentPatientIndex + 1) % pList.length;
+        applyProfileToForm("patient", pList[currentPatientIndex]);
+        toast(`Perfil de prueba: ${pList[currentPatientIndex].name}`);
+      }
+    } else if (targetRole === "doctor") {
+      const dList = state.doctors || [];
+      if (dList.length > 0) {
+        currentDoctorIndex = (currentDoctorIndex + 1) % dList.length;
+        applyProfileToForm("doctor", dList[currentDoctorIndex]);
+        toast(`Perfil de prueba: ${dList[currentDoctorIndex].name}`);
+      }
+    }
+  }
+
+  function toggleDemoMode() {
+    DEMO_CONFIG.isTesting = !DEMO_CONFIG.isTesting;
+    toast(DEMO_CONFIG.isTesting ? "Modo de pruebas y rotación activado" : "Modo normal (sin rotación) activado");
+    if (DEMO_CONFIG.isTesting) pickRandomProfiles();
+    render();
+  }
+
+  function applyProfileToForm(role, item) {
+    const emailInput = document.getElementById("email");
+    const passInput = document.getElementById("pass");
+    const demo = document.getElementById("demo");
+    if (!emailInput || !demo) return;
+
+    if (role === "patient" && item) {
+      emailInput.value = item.email;
+      if (passInput) passInput.value = "1234";
+      demo.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <b>🔑 Perfil de Prueba (Paciente ${currentPatientIndex + 1}/${state.patients.length}):</b>
+          <button type="button" class="btn btn-soft btn-sm" style="padding:2px 8px;font-size:11px" onclick="rotateProfile('patient')">
+            🔄 Rotar Paciente
+          </button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <img src="${item.avatar}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--verde-vitalidad)">
+          <div>
+            <b>${item.name}</b> (${item.age} años · ${item.city})<br>
+            <small style="color:var(--muted)">Diagnóstico: <b>${item.diagnosis}</b></small>
+          </div>
+        </div>
+        • Correo: <code>${item.email}</code> | Clave: <code>1234</code><br>
+        <small style="color:var(--muted)">Entorno adaptado para adultos mayores con guía por voz.</small>
+      `;
+    } else if (role === "doctor" && item) {
+      emailInput.value = item.email;
+      if (passInput) passInput.value = "doctor123";
+      demo.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <b>🔑 Perfil de Prueba (Médico ${currentDoctorIndex + 1}/${state.doctors.length}):</b>
+          <button type="button" class="btn btn-soft btn-sm" style="padding:2px 8px;font-size:11px" onclick="rotateProfile('doctor')">
+            🔄 Rotar Médico
+          </button>
+        </div>
+        <div style="margin-bottom:6px">
+          <b>${item.name}</b> · <span class="chip chip-purple" style="font-size:11px">${item.specialty}</span><br>
+          <small style="color:var(--muted)">${item.center}</small>
+        </div>
+        • Correo: <code>${item.email}</code> | Clave: <code>doctor123</code><br>
+        <small style="color:var(--muted)">Supervisión de pacientes asignados y prescripción.</small>
+      `;
+    } else {
+      emailInput.value = "admin@movify.ec";
+      if (passInput) passInput.value = "admin123";
+      demo.innerHTML = `
+        <b>🔑 Super Admin:</b> <code>admin@movify.ec</code> | Clave: <code>admin123</code><br>
+        <small style="color:var(--muted)">Asignación multidisciplinaria de pacientes y doctores.</small>
+      `;
+    }
+  }
+
+  /* ----------------------------------------------------------------
      1. PANTALLA DE LOGIN Y REGISTRO DE NUEVO USUARIO
      ---------------------------------------------------------------- */
   let selectedTab = "patient";
 
   function login() {
+    const isTesting = DEMO_CONFIG.isTesting;
+    if (isTesting && (currentPatientIndex < 0 || currentDoctorIndex < 0)) {
+      pickRandomProfiles();
+    }
+
+    const currentPatient = (isTesting && state.patients && state.patients.length > 0)
+      ? state.patients[currentPatientIndex] || state.patients[0]
+      : null;
+    const currentDoctor = (isTesting && state.doctors && state.doctors.length > 0)
+      ? state.doctors[currentDoctorIndex] || state.doctors[0]
+      : null;
+
+    let emailVal = "";
+    let passVal = "";
+    let demoHtml = "";
+
+    if (isTesting) {
+      if (selectedTab === "patient" && currentPatient) {
+        emailVal = currentPatient.email;
+        passVal = "1234";
+        demoHtml = `
+          <div class="demo-callout" id="demo">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <b>🔑 Perfil de Prueba (Paciente ${currentPatientIndex + 1}/${state.patients.length}):</b>
+              <button type="button" class="btn btn-soft btn-sm" style="padding:2px 8px;font-size:11px" onclick="rotateProfile('patient')">
+                🔄 Rotar Paciente
+              </button>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+              <img src="${currentPatient.avatar}" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--verde-vitalidad)">
+              <div>
+                <b>${currentPatient.name}</b> (${currentPatient.age} años · ${currentPatient.city})<br>
+                <small style="color:var(--muted)">Diagnóstico: <b>${currentPatient.diagnosis}</b></small>
+              </div>
+            </div>
+            • Correo: <code>${currentPatient.email}</code> | Clave: <code>1234</code><br>
+            <small style="color:var(--muted)">Entorno adaptado para adultos mayores con guía por voz.</small>
+          </div>
+        `;
+      } else if (selectedTab === "doctor" && currentDoctor) {
+        emailVal = currentDoctor.email;
+        passVal = "doctor123";
+        demoHtml = `
+          <div class="demo-callout" id="demo">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <b>🔑 Perfil de Prueba (Médico ${currentDoctorIndex + 1}/${state.doctors.length}):</b>
+              <button type="button" class="btn btn-soft btn-sm" style="padding:2px 8px;font-size:11px" onclick="rotateProfile('doctor')">
+                🔄 Rotar Médico
+              </button>
+            </div>
+            <div style="margin-bottom:6px">
+              <b>${currentDoctor.name}</b> · <span class="chip chip-purple" style="font-size:11px">${currentDoctor.specialty}</span><br>
+              <small style="color:var(--muted)">${currentDoctor.center}</small>
+            </div>
+            • Correo: <code>${currentDoctor.email}</code> | Clave: <code>doctor123</code><br>
+            <small style="color:var(--muted)">Supervisión de pacientes asignados y prescripción.</small>
+          </div>
+        `;
+      } else {
+        emailVal = "admin@movify.ec";
+        passVal = "admin123";
+        demoHtml = `
+          <div class="demo-callout" id="demo">
+            <b>🔑 Super Admin:</b> <code>admin@movify.ec</code> | Clave: <code>admin123</code><br>
+            <small style="color:var(--muted)">Asignación multidisciplinaria de pacientes y doctores.</small>
+          </div>
+        `;
+      }
+    }
+
+    const testBannerHtml = isTesting ? `
+      <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(2,128,144,0.06);border:1px dashed var(--verde-vitalidad);border-radius:12px;padding:6px 10px;margin-bottom:12px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:6px">
+          <span>🧪 <b>Modo Pruebas:</b> Rotación activa</span>
+        </div>
+        <button type="button" class="btn btn-soft btn-sm" style="padding:2px 8px;font-size:11px" onclick="pickRandomProfiles();render();toast('Nuevos perfiles aleatorios asignados')">
+          🔀 Nuevo Aleatorio
+        </button>
+      </div>
+    ` : "";
+
     return `
       <section class="login-wrapper">
         <div class="login-box">
@@ -1373,26 +1582,24 @@
           <h1 style="font-family:var(--font-title);font-size:24px;margin:2px 0 6px;color:var(--azul-profundo)">Movify Senior</h1>
           <p style="color:var(--muted);font-size:14px;margin-bottom:12px;">¡Tu bienestar, nuestra prioridad!</p>
           
+          ${testBannerHtml}
+
           <div class="role-tabs">
-            <button id="rp" class="role-tab-btn active" onclick="setRoleTab('patient')">👤 Paciente</button>
-            <button id="rd" class="role-tab-btn" onclick="setRoleTab('doctor')">🩺 Médico</button>
-            <button id="ra" class="role-tab-btn" onclick="setRoleTab('admin')">⚙️ Admin</button>
+            <button id="rp" class="role-tab-btn ${selectedTab === "patient" ? "active" : ""}" onclick="setRoleTab('patient')">👤 Paciente</button>
+            <button id="rd" class="role-tab-btn ${selectedTab === "doctor" ? "active" : ""}" onclick="setRoleTab('doctor')">🩺 Médico</button>
+            <button id="ra" class="role-tab-btn ${selectedTab === "admin" ? "active" : ""}" onclick="setRoleTab('admin')">⚙️ Admin</button>
           </div>
 
           <div class="field">
             <label>Correo de Acceso</label>
-            <input id="email" type="email" value="rose.chango@movify.ec">
+            <input id="email" type="email" value="${emailVal}">
           </div>
           <div class="field">
             <label>Contraseña</label>
-            <input id="pass" type="password" value="1234">
+            <input id="pass" type="password" value="${passVal}">
           </div>
 
-          <div class="demo-callout" id="demo">
-            <b>🔑 Acceso Rápido:</b><br>
-            • Correo: <code>rose.chango@movify.ec</code> | Clave: <code>1234</code><br>
-            <small style="color:var(--muted)">Entorno adaptado para adultos mayores con guía por voz.</small>
-          </div>
+          ${demoHtml}
 
           <button class="btn btn-vitalidad" style="width:100%;margin-bottom:14px" onclick="loginNow()">
             Ingresar a Movify Senior
@@ -1411,21 +1618,30 @@
 
   function setRoleTab(r) {
     selectedTab = r;
-    document.getElementById("rp").classList.toggle("active", r === "patient");
-    document.getElementById("rd").classList.toggle("active", r === "doctor");
-    document.getElementById("ra").classList.toggle("active", r === "admin");
-    const email = document.getElementById("email");
-    const demo = document.getElementById("demo");
+    const rp = document.getElementById("rp");
+    const rd = document.getElementById("rd");
+    const ra = document.getElementById("ra");
+    if (rp) rp.classList.toggle("active", r === "patient");
+    if (rd) rd.classList.toggle("active", r === "doctor");
+    if (ra) ra.classList.toggle("active", r === "admin");
 
-    if (r === "patient") {
-      email.value = "rose.chango@movify.ec";
-      demo.innerHTML = "<b>🔑 Paciente:</b> <code>rose.chango@movify.ec</code> | Clave: <code>1234</code><br><small>Rutinas guiadas por voz y música motivacional.</small>";
-    } else if (r === "doctor") {
-      email.value = "daniel.ceron@movify.ec";
-      demo.innerHTML = "<b>🔑 Médico:</b> <code>daniel.ceron@movify.ec</code> | Clave: <code>doctor123</code><br><small>Supervisión de pacientes asignados y prescripción.</small>";
+    if (DEMO_CONFIG.isTesting) {
+      if (r === "patient") {
+        if (currentPatientIndex < 0) currentPatientIndex = getRandomIndex(state.patients.length, -1);
+        applyProfileToForm("patient", state.patients[currentPatientIndex]);
+      } else if (r === "doctor") {
+        if (currentDoctorIndex < 0) currentDoctorIndex = getRandomIndex(state.doctors.length, -1);
+        applyProfileToForm("doctor", state.doctors[currentDoctorIndex]);
+      } else {
+        applyProfileToForm("admin", null);
+      }
     } else {
-      email.value = "admin@movify.ec";
-      demo.innerHTML = "<b>🔑 Super Admin:</b> <code>admin@movify.ec</code> | Clave: <code>admin123</code><br><small>Asignación multidisciplinaria de pacientes y doctores.</small>";
+      const email = document.getElementById("email");
+      const pass = document.getElementById("pass");
+      const demo = document.getElementById("demo");
+      if (email) email.value = "";
+      if (pass) pass.value = "";
+      if (demo) demo.style.display = "none";
     }
   }
 
@@ -1451,6 +1667,7 @@
       const foundPatient = state.patients.find(p => p.email === email);
       if (foundPatient) {
         state.user = {
+          id: foundPatient.id,
           name: foundPatient.name.split(" ")[0],
           full: foundPatient.name,
           age: foundPatient.age,
@@ -1458,16 +1675,23 @@
           diagnosis: foundPatient.diagnosis,
           doctorIds: foundPatient.doctorIds || ["doc1"],
           emergency: foundPatient.emergency,
-          avatar: foundPatient.avatar
+          avatar: foundPatient.avatar,
+          progress: foundPatient.progress,
+          streak: foundPatient.streak,
+          lastRoutine: foundPatient.lastRoutine
         };
+        if (foundPatient.streak) state.streak = foundPatient.streak;
       }
       state.role = "patient";
       state.screen = "home";
       state.currentUserEmail = email;
       save();
       render();
-      toast(`¡Hola ${state.user.name}! Bienvenida.`);
-      speak(`Bienvenida ${state.user.name}. Vamos a movernos con calma hoy.`);
+      const firstName = state.user.name || "Usuario";
+      const isMale = ["joseph", "michael", "carlos", "juan", "pedro"].includes(firstName.toLowerCase());
+      const saludo = isMale ? "Bienvenido" : "Bienvenida";
+      toast(`¡Hola ${firstName}! ${saludo}.`);
+      speak(`${saludo} ${firstName}. Vamos a movernos con calma hoy.`);
     }
   }
 
@@ -1653,12 +1877,21 @@
     state.role = null;
     state.screen = "login";
     stopBackgroundMusic();
+    if (DEMO_CONFIG.isTesting) {
+      pickRandomProfiles();
+    }
     save();
     render();
     toast("Sesión cerrada");
   }
 
   function go(s) {
+    if (s === "login") {
+      state.role = null;
+      if (DEMO_CONFIG.isTesting) {
+        pickRandomProfiles();
+      }
+    }
     state.screen = s;
     save();
     render();
@@ -2685,6 +2918,10 @@
   window.openEditDiagnosisModal = openEditDiagnosisModal;
   window.saveDiagnosis = saveDiagnosis;
   window.openAboutModal = openAboutModal;
+  window.rotateProfile = rotateProfile;
+  window.pickRandomProfiles = pickRandomProfiles;
+  window.toggleDemoMode = toggleDemoMode;
+  window.DEMO_CONFIG = DEMO_CONFIG;
 
   render();
 </script>
