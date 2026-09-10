@@ -1,0 +1,76 @@
+name: Auto-Deploy to Netlify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Descargar código del repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Validar HTML
+      - name: Validate HTML
+        run: |
+          echo "✅ Validating HTML..."
+          if [ ! -f "index.html" ]; then
+            echo "❌ index.html not found!"
+            exit 1
+          fi
+          echo "✅ HTML file found"
+
+      # 3. Validar manifest.json
+      - name: Validate manifest.json
+        run: |
+          echo "✅ Checking manifest.json..."
+          if [ ! -f "manifest.json" ]; then
+            echo "⚠️  manifest.json not found"
+          else
+            echo "✅ manifest.json found"
+          fi
+
+      # 4. Revisar tamaño de archivos
+      - name: Check file sizes
+        run: |
+          echo "📊 Repository size:"
+          du -sh .
+          echo ""
+          echo "Top 10 largest files:"
+          find . -type f -exec du -h {} + | sort -rh | head -10
+
+      # 5. Desplegar en Netlify
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: '.'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "✨ Deploy: ${{ github.event.head_commit.message }}"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5
+
+      # 6. Notificación de éxito
+      - name: Success notification
+        if: success()
+        run: |
+          echo "✅ Deployment successful!"
+          echo "🌐 Your site is now live on Netlify"
+
+      # 7. Notificación de error
+      - name: Failure notification
+        if: failure()
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Check the logs above for details"
+          exit 1

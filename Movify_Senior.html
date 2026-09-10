@@ -852,6 +852,81 @@
       accent-color: var(--verde-vitalidad);
     }
 
+    .panel-title {
+      color: var(--azul-profundo);
+    }
+
+    /* TEMA OSCURO - PANEL DEL SUPER ADMINISTRADOR (para diferenciarlo del resto de paneles) */
+    .admin-dark {
+      --muted: #94A3B8;
+    }
+
+    .admin-dark .sidebar {
+      background: #0B1220;
+    }
+
+    .admin-dark .dashboard-main {
+      background: #0F172A;
+    }
+
+    .admin-dark .panel-title {
+      color: #F8FAFC;
+    }
+
+    .admin-dark .section-title h2 {
+      color: #F1F5F9;
+    }
+
+    .admin-dark .stat-box {
+      background: #1E293B;
+      border-color: #334155;
+      box-shadow: none;
+      color: #F1F5F9;
+    }
+
+    .admin-dark .stat-box b {
+      color: #F1F5F9;
+    }
+
+    .admin-dark .data-table-container {
+      background: #1E293B;
+      border-color: #334155;
+    }
+
+    .admin-dark .data-table th {
+      border-bottom-color: #334155;
+    }
+
+    .admin-dark .data-table td {
+      color: #E2E8F0;
+      border-bottom-color: #293548;
+    }
+
+    .admin-dark .chip {
+      background: rgba(0, 136, 148, 0.22);
+      color: #5EEAD4;
+    }
+
+    .admin-dark .chip-purple {
+      background: rgba(139, 92, 246, 0.22);
+      color: #D8B4FE;
+    }
+
+    .admin-dark .progress-bar {
+      background: #334155;
+    }
+
+    .admin-dark .btn-soft {
+      background: #1E293B;
+      color: #E2E8F0;
+      border-color: #334155;
+    }
+
+    .admin-dark .btn-soft:hover {
+      background: #273449;
+      border-color: #475569;
+    }
+
     @media(max-width: 860px) {
       .dashboard-layout { grid-template-columns: 1fr; }
       .sidebar { display: none; }
@@ -860,6 +935,13 @@
       .category-grid { grid-template-columns: 1fr; }
       .hero { flex-direction: column; text-align: center; }
       .hero-content { max-width: 100%; margin-bottom: 14px; }
+      .dashboard-main > .row-flex {
+        flex-wrap: wrap;
+      }
+      .dashboard-main > .row-flex > button {
+        width: 100%;
+        flex-shrink: 0;
+      }
     }
   </style>
 </head>
@@ -1826,7 +1908,7 @@
      ---------------------------------------------------------------- */
   function adminDashboard() {
     return `
-      <section class="screen">
+      <section class="screen admin-dark">
         <div class="dashboard-layout">
           <aside class="sidebar">
             <div class="sidebar-brand">
@@ -1859,7 +1941,7 @@
             <div class="row-flex">
               <div>
                 <div class="eyebrow" style="color:var(--verde-vitalidad)">PANEL GENERAL DEL SISTEMA</div>
-                <h1 style="font-family:var(--font-title);font-size:26px;color:var(--azul-profundo);margin:2px 0">Administración de Red</h1>
+                <h1 class="panel-title" style="font-family:var(--font-title);font-size:26px;margin:2px 0">Administración de Red</h1>
               </div>
               <button class="btn btn-soft btn-sm" onclick="logout()">Salir</button>
             </div>
