@@ -2025,7 +2025,12 @@
                           </div>
                         </td>
                         <td>${p.age} años<br><small style="color:var(--muted)">${p.city}</small></td>
-                        <td><span class="chip">${p.diagnosis}</span></td>
+                        <td>
+                          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                            <span class="chip">${p.diagnosis}</span>
+                            <button class="btn btn-soft btn-sm" style="padding:4px 8px;font-size:12px" onclick="openEditDiagnosisModal('${p.id}')" title="Editar diagnóstico">✎</button>
+                          </div>
+                        </td>
                         <td>
                           <b>${p.progress}%</b>
                           <div class="progress-bar" style="height:6px;width:90px;margin:3px 0 0">
@@ -2096,6 +2101,44 @@
     save();
     render();
     toast(`Especialistas actualizados para ${p.name}`);
+  }
+
+  /* Edición del diagnóstico: disponible en cualquier momento para Admin y Médico */
+  function openEditDiagnosisModal(patientId) {
+    const p = state.patients.find(x => x.id === patientId);
+    if (!p) return;
+
+    openSheet(`
+      <h2 style="font-family:var(--font-title);font-size:20px;margin-bottom:6px;color:var(--azul-profundo)">Editar Diagnóstico</h2>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Actualiza el diagnóstico o molestia principal de <b>${p.name}</b>.</p>
+
+      <div class="field">
+        <label>Diagnóstico / Molestia Principal</label>
+        <input id="edit_diag_input" value="${p.diagnosis}">
+      </div>
+
+      <button class="btn btn-vitalidad" style="width:100%;margin-top:16px" onclick="saveDiagnosis('${p.id}')">
+        Guardar Diagnóstico
+      </button>
+    `);
+  }
+
+  function saveDiagnosis(patientId) {
+    const p = state.patients.find(x => x.id === patientId);
+    if (!p) return;
+
+    const val = document.getElementById("edit_diag_input").value.trim();
+    if (!val) return toast("Escribe un diagnóstico válido");
+
+    p.diagnosis = val;
+    if (p.name === state.user.full) {
+      state.user.diagnosis = val;
+    }
+
+    closeSheet();
+    save();
+    render();
+    toast(`Diagnóstico actualizado para ${p.name}`);
   }
 
   /* ----------------------------------------------------------------
@@ -2170,8 +2213,11 @@
                       <span class="chip">${p.progress}% Adherencia</span>
                     </div>
                     <h3 style="font-family:var(--font-title);font-size:17px;color:var(--azul-profundo)">${p.name}</h3>
-                    <p style="font-size:13px;color:var(--muted);margin-bottom:6px">${p.age} años · ${p.diagnosis}</p>
-                    
+                    <div class="row-flex" style="margin-bottom:6px">
+                      <p style="font-size:13px;color:var(--muted);margin:0">${p.age} años · ${p.diagnosis}</p>
+                      <button class="btn btn-soft btn-sm" style="padding:2px 8px;font-size:11px;flex-shrink:0" onclick="openEditDiagnosisModal('${p.id}')" title="Editar diagnóstico">✎</button>
+                    </div>
+
                     <div style="font-size:12px;color:var(--muted);margin-bottom:8px">
                       <b>Equipo:</b> ${team.map(t => t.name.split(" ")[1]).join(", ")}
                     </div>
@@ -2487,6 +2533,8 @@
   window.nextMusicTrack = nextMusicTrack;
   window.openEditDoctorsModal = openEditDoctorsModal;
   window.savePatientDoctors = savePatientDoctors;
+  window.openEditDiagnosisModal = openEditDiagnosisModal;
+  window.saveDiagnosis = saveDiagnosis;
 
   render();
 </script>
