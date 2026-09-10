@@ -1257,12 +1257,81 @@
     el.classList.add("show");
   }
 
+  let cachedLatinVoice = null;
+
+  function getLatinVoice() {
+    if (!("speechSynthesis" in window)) return null;
+    const voices = speechSynthesis.getVoices();
+    if (!voices || !voices.length) return null;
+
+    // Filtrar voces en español excluyendo expresamente España (es-ES / Spain)
+    const latinVoices = voices.filter(v => {
+      const lang = (v.lang || "").toLowerCase().replace("_", "-");
+      const name = (v.name || "").toLowerCase();
+      const isSpanish = lang.startsWith("es");
+      const isSpain = lang === "es-es" || name.includes("spain") || name.includes("españa") || name.includes("castilian") || name.includes("castellano");
+      return isSpanish && !isSpain;
+    });
+
+    if (latinVoices.length === 0) {
+      // Si solo existen voces genéricas 'es', intentar evitar España
+      const fallback = voices.find(v => (v.lang || "").toLowerCase().startsWith("es") && !(v.lang || "").toLowerCase().includes("es-es"));
+      return fallback || null;
+    }
+
+    // 1. Priorizar voces naturales / online (Microsoft Dalia Natural, Salome Natural, etc.)
+    const naturalVoice = latinVoices.find(v => {
+      const n = v.name.toLowerCase();
+      return n.includes("natural") || n.includes("online");
+    });
+    if (naturalVoice) return naturalVoice;
+
+    // 2. Voces amables y cálidas de acento latino (Sabina, Dalia, Paulina, Salome, Estados Unidos, Raul, Jorge)
+    const preferredNames = [
+      "sabina", "dalia", "paulina", "salome", "salomé", 
+      "paloma", "estados unidos", "raul", "raúl", "jorge", "gonzalo"
+    ];
+    for (const nameKey of preferredNames) {
+      const found = latinVoices.find(v => v.name.toLowerCase().includes(nameKey));
+      if (found) return found;
+    }
+
+    // 3. Regiones preferidas de habla hispana en América (Ecuador, Latinoamérica, México, Colombia, etc.)
+    const preferredLangs = ["es-419", "es-ec", "es-mx", "es-co", "es-us", "es-pe", "es-ar", "es-cl"];
+    for (const langKey of preferredLangs) {
+      const found = latinVoices.find(v => v.lang.toLowerCase().replace("_", "-").startsWith(langKey));
+      if (found) return found;
+    }
+
+    return latinVoices[0];
+  }
+
+  function initLatinVoice() {
+    if ("speechSynthesis" in window) {
+      cachedLatinVoice = getLatinVoice();
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = function() {
+          cachedLatinVoice = getLatinVoice();
+        };
+      }
+    }
+  }
+  initLatinVoice();
+
   function speak(t) {
     if (state.voice && "speechSynthesis" in window) {
       try {
         speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(t);
-        u.lang = "es-ES";
+        const voice = cachedLatinVoice || getLatinVoice();
+        if (voice) {
+          u.voice = voice;
+          u.lang = voice.lang || "es-419";
+        } else {
+          u.lang = (navigator.language && navigator.language.startsWith("es-") && !navigator.language.toLowerCase().includes("es-es")) 
+            ? navigator.language 
+            : "es-419";
+        }
         u.rate = 0.92;
         speechSynthesis.speak(u);
       } catch (e) {}
