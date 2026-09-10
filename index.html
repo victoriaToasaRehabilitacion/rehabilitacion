@@ -158,6 +158,35 @@
       font-size: 15px;
     }
 
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .iconbtn.about-btn {
+      width: auto;
+      padding: 0 12px;
+      background: var(--verde-vitalidad-light);
+      border-color: rgba(0, 136, 148, 0.35);
+      color: var(--verde-vitalidad);
+      font-weight: 800;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    @media(max-width: 400px) {
+      .iconbtn.about-btn {
+        width: 48px;
+        padding: 0;
+        font-size: 0;
+      }
+      .iconbtn.about-btn::before {
+        content: "ℹ️";
+        font-size: 20px;
+      }
+    }
+
     .content {
       padding: 22px 20px;
       max-width: 960px;
@@ -1591,9 +1620,53 @@
         <div class="topbar-brand">
           <img src="assets/logo_text.png" alt="Movify Senior" class="logo-img">
         </div>
-        <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
+        <div class="topbar-actions">
+          <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior">ACERCA DE</button>
+          <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
+        </div>
       </header>
     `;
+  }
+
+  /* Modal "Acerca de": contexto del proyecto, a quién va destinado y su propósito */
+  function openAboutModal() {
+    openSheet(`
+      <h2 style="font-family:var(--font-title);font-size:20px;margin-bottom:12px;color:var(--azul-profundo)">Acerca de Movify Senior</h2>
+
+      <h3 style="font-family:var(--font-title);font-size:14px;color:var(--verde-vitalidad);margin-bottom:6px">DESTINADO A</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6">
+        La adherencia a los programas de rehabilitación física disminuye significativamente cuando el paciente abandona el entorno clínico. En el caso de los adultos mayores, esta situación se agrava por barreras como la dificultad de desplazamiento, la falta de acompañamiento constante y el olvido de rutinas. Una aplicación diseñada bajo principios de accesibilidad, diseño centrado en el usuario y gamificación suave puede mejorar la constancia terapéutica, facilitar el monitoreo remoto por parte del fisioterapeuta y fortalecer el vínculo entre el paciente, su familia y el equipo de salud.
+      </p>
+
+      <h3 style="font-family:var(--font-title);font-size:14px;color:var(--verde-vitalidad);margin-bottom:6px">OBJETIVO GENERAL</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6">
+        Diseñar una aplicación móvil accesible que apoye el proceso de rehabilitación física de adultos mayores, promoviendo la adherencia terapéutica mediante herramientas de seguimiento, recordatorios y comunicación con el equipo de salud.
+      </p>
+
+      <h3 style="font-family:var(--font-title);font-size:14px;color:var(--verde-vitalidad);margin-bottom:6px">BENEFICIOS</h3>
+      <ul style="font-size:13px;color:var(--muted);margin:0 0 16px 18px;line-height:1.6">
+        <li>Mejora la adherencia al tratamiento al llevar la rutina fuera del consultorio, con recordatorios y horarios personalizables.</li>
+        <li>Reduce el riesgo de caídas mediante rutinas progresivas de equilibrio y fuerza basadas en evidencia clínica.</li>
+        <li>Facilita el monitoreo remoto del fisioterapeuta a través de notificaciones automáticas y reportes de cumplimiento.</li>
+        <li>Da tranquilidad a la familia mediante el botón de emergencia, la ubicación compartida y los avisos de actividad diaria.</li>
+        <li>Favorece la autonomía del paciente al organizar en un solo lugar sus citas médicas, medicamentos y ejercicios.</li>
+      </ul>
+
+      <h3 style="font-family:var(--font-title);font-size:14px;color:var(--verde-vitalidad);margin-bottom:6px">MISIÓN</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6">
+        Acompañar a los adultos mayores en su proceso de rehabilitación física mediante una herramienta digital accesible, seguible y segura, que fortalezca su autonomía, su adherencia terapéutica y su vínculo con la familia y el equipo de salud.
+      </p>
+
+      <h3 style="font-family:var(--font-title);font-size:14px;color:var(--verde-vitalidad);margin-bottom:6px">VISIÓN</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6">
+        Convertirse en una aplicación de referencia para la rehabilitación física geriátrica en Ecuador, reconocida por su accesibilidad, su enfoque centrado en la seguridad del paciente y su capacidad de integrar al entorno familiar y clínico en un mismo espacio digital.
+      </p>
+
+      <div class="demo-callout" style="text-align:left">
+        <b>NOTA</b><br>
+        El diseño de Movify Senior evidencia que una aplicación de rehabilitación física orientada al adulto mayor requiere decisiones de diseño distintas a las de una aplicación convencional: mayor contraste cromático, tipografía ampliada, navegación simplificada y mecanismos de motivación no competitivos. La incorporación de un modo asistido y de comunicación directa con el equipo de salud responde a la necesidad de mantener el acompañamiento profesional incluso en el uso autónomo de la herramienta.
+      </div>
+    `);
   }
 
   /* Helper para obtener nombres de médicos asignados al paciente */
@@ -1627,7 +1700,10 @@
           <div class="topbar-brand">
             <img src="assets/logo_text.png" alt="Movify Senior" class="logo-img">
           </div>
-          <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
+          <div class="topbar-actions">
+            <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior">ACERCA DE</button>
+            <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
+          </div>
         </header>
 
         <div class="content">
@@ -2535,6 +2611,7 @@
   window.savePatientDoctors = savePatientDoctors;
   window.openEditDiagnosisModal = openEditDiagnosisModal;
   window.saveDiagnosis = saveDiagnosis;
+  window.openAboutModal = openAboutModal;
 
   render();
 </script>
