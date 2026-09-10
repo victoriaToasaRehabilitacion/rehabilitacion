@@ -1,0 +1,16 @@
+{
+  "name": "Movify Senior",
+  "short_name": "Movify",
+  "description": "App de rehabilitación y movimiento suave para adultos mayores",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#231F36",
+  "theme_color": "#231F36",
+  "icons": [
+    {
+      "src": "logo.jpeg",
+      "sizes": "192x192 512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

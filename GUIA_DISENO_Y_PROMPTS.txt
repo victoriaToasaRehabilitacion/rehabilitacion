@@ -1,0 +1,118 @@
+================================================================================
+GUIA DE DISENO SIMPLIFICADA Y CHECKLIST DE ASSETS - MOVIFY SENIOR
+================================================================================
+Estado: Actualizado con las 10 nuevas imagenes generadas en 'nuevas imagenes/'
+
+--------------------------------------------------------------------------------
+1. IMAGENES GENERADAS Y ASIGNADAS (10 PIEZAS LISTAS EN 'nuevas imagenes/'):
+--------------------------------------------------------------------------------
+[LISTO] 1. Hero Banner Principal:
+        Archivo: Gemini_Generated_Image_pzneejpzneejpzne.jpg (1920x1080)
+        Contenido: Pareja de abuelitos activos con musica y estiramiento.
+        Uso: Pantalla de Bienvenida y Header del Dashboard Paciente.
+
+[LISTO] 2. Logo e Isotipo de Marca:
+        Archivo: Gemini_Generated_Image_bsupv7bsupv7bsup.jpg (1024x1024)
+        Contenido: Abuelitos en circulo verde con hojas, corazon y 'Movify Senior'.
+        Uso: Pantalla de Login, Splash y Presentacion.
+
+[LISTO] 3. App Icons para Movil (4 Variantes Squircle):
+        Archivo: Gemini_Generated_Image_krk1a9krk1a9krk1.jpg (1024x1024)
+        Contenido: Icono V-humana en Gradiente, Dark Mode, Blanco y con Texto.
+        Uso: Favicon y PWA instalable en Android / iOS.
+
+[LISTO] 4. Onboarding Tour - Paso 2 & Ejercicio con Musica:
+        Archivo: Gemini_Generated_Image_5rzbly5rzbly5rzb.jpg (1024x768)
+        Contenido: Abuelita en sillon haciendo pesas suaves con notas musicales.
+        Uso: Tour Paso 2 y Pantalla de Reproduccion de Ejercicio.
+
+[LISTO] 5. Onboarding Tour - Paso 3 & Seccion Multidisciplinaria:
+        Archivo: Gemini_Generated_Image_njpc2bnjpc2bnjpc.jpg (1024x768)
+        Contenido: Fisioterapeuta, Dra. Gomez y Terapeuta Ocupacional.
+        Uso: Tour Paso 3 y Encabezado de Salud / Citas Medicas.
+
+[LISTO] 6. Onboarding Tour - Paso 4 & Boton SOS:
+        Archivo: Gemini_Generated_Image_zlccxzlccxzlccxz.jpg (1024x768)
+        Contenido: Escudo 3D con campana y corazon latiente 'Seguridad 24/7'.
+        Uso: Tour Paso 4 y Modal de Emergencia SOS.
+
+[LISTO] 7. Rutina 1 - Movilidad Articular:
+        Archivo: Gemini_Generated_Image_jmtvwljmtvwljmtv.jpg (1024x1024)
+        Contenido: Abuelito realizando giros de hombro.
+
+[LISTO] 8. Rutina 2 - Fuerza y Equilibrio Seguro:
+        Archivo: Gemini_Generated_Image_62rvp862rvp862rv.jpg (1024x1024)
+        Contenido: Abuelita haciendo sentadilla controlada en silla.
+
+[LISTO] 9. Rutina 3 - Respiracion y Relajacion:
+        Archivo: Gemini_Generated_Image_tq1e3xtq1e3xtq1e.jpg (1024x1024)
+        Contenido: Abuelita meditando con brisa turquesa y hojas verdes.
+
+[LISTO] 10. Rutina 4 - Coordinacion y Terapia Manual:
+        Archivo: Gemini_Generated_Image_6lfqhd6lfqhd6lfq.jpg (1024x1024)
+        Contenido: Manos manipulando aros y esferas terapeuticas.
+
+
+--------------------------------------------------------------------------------
+2. LO UNICO QUE FALTA POR GENERAR (PROMPTS CORTOS Y DIRECTOS):
+--------------------------------------------------------------------------------
+
+A) 4 AVATARES DE DOCTORES (Formato 500x500 px, fondo circular suave):
+   1. Lic. Alexander Perez (Fisioterapeuta, 35 anos, amigable en scrubs turquesa):
+      PROMPT: "Front portrait 3D avatar of a friendly Latino male physiotherapist in his mid 30s, neat black hair, wearing modern teal medical scrubs, warm reassuring smile, clean pastel circle background, 8k --ar 1:1"
+
+   2. Dra. Sophia Mendoza (Traumatologa, 40 anos, bata blanca y estetoscopio):
+      PROMPT: "Front portrait 3D avatar of a smart Latina female doctor in her 40s, hair tied back, white clinical coat, stethoscope around neck, confident empathetic smile, isolated on soft cyan background --ar 1:1"
+
+   3. Lic. Marcus Viteri (Terapeuta Ocupacional, 30 anos, gafas modernas):
+      PROMPT: "Portrait 3D avatar of a young energetic male occupational therapist, modern glasses, smiling kindly, wearing dark teal polo shirt with health pin, clean lighting --ar 1:1"
+
+   4. Dr. Ethan Morales (Geriatra Senior, 58 anos, cabello entrecano):
+      PROMPT: "Portrait 3D avatar of a distinguished senior male doctor, salt and pepper hair, kind grandfatherly eyes, white doctor jacket and tie, comforting smile, 3D render --ar 1:1"
+
+
+B) 5 AVATARES DE PACIENTES ADULTOS MAYORES (Formato 500x500 px, calidos y sonrientes):
+   1. Rose Chango (82 anos, cabello blanco rizado, sueter lavanda):
+      PROMPT: "Friendly 82-year-old Latina grandmother avatar, curly silver hair, round glasses, elegant lavender knit sweater, cheerful rosy cheeks, 3D character portrait --ar 1:1"
+
+   2. Joseph Guaman (76 anos, cabello gris corto, polo verde oliva):
+      PROMPT: "Dignified 76-year-old Latino grandfather avatar, short gray hair, kind wrinkly smile, olive green polo shirt, healthy and energetic look, clean 3D render --ar 1:1"
+
+   3. Mary Lema (79 anos, corte plateado ondulado, chaqueta turquesa):
+      PROMPT: "Active 79-year-old elderly woman avatar, wavy silver hair, turquoise cardigan, bright enthusiastic smile, warm lighting, 3D character headshot --ar 1:1"
+
+   4. Grace Morales (84 anos, trenza blanca, chalina rosa suave):
+      PROMPT: "Sweet 84-year-old grandmother avatar, braided white hair, cozy soft pink scarf, peaceful maternal smile, pastel 3D headshot --ar 1:1"
+
+   5. Michael Silva (71 anos, barba recortada canosa, aspecto deportivo):
+      PROMPT: "Active 71-year-old senior man avatar, short gray beard, sporty blue track jacket, athletic vital smile, healthy elderly lifestyle 3D avatar --ar 1:1"
+
+
+C) 3 BADGES DE LOGROS Y TROFEOS (Formato 512x512 px, PNG Transparente):
+   1. Medalla de Racha (Fuego dorado y hoja verde):
+      PROMPT: "Glossy 3D trophy badge with a golden flame and green leaf inside a gold circular frame, turquoise ribbon, transparent background, clean clay render --ar 1:1"
+
+   2. Corazon Vital (Corazon turquesa de cristal con pulso de luz):
+      PROMPT: "Translucent glossy 3D heart made of turquoise glass with glowing golden heartbeat line inside, soft sparks, health award icon, transparent background --ar 1:1"
+
+   3. Copa de Campeon Senior (Trofeo de oro con laurel menta):
+      PROMPT: "Cute compact 3D golden trophy cup with mint green laurel leaves and gold star on top, bright lighting, isolated on transparent background --ar 1:1"
+
+
+--------------------------------------------------------------------------------
+3. PALETA DE COLOR Y TIPOGRAFIA (RESUMEN EXPRESS):
+--------------------------------------------------------------------------------
+- Colores Clave:
+  * Turquesa Principal: #028090
+  * Verde Menta Salud:  #00A896
+  * Azul Marino Texto:  #052A3C
+  * Coral Accion / SOS: #F4845F
+  * Fondo Seda Suave:   #F4F9FA
+
+- Tipografias Oficiales:
+  * Titulos y Numeros: 'Plus Jakarta Sans' o 'Outfit' (Bold 700 / SemiBold 600)
+  * Lectura e Instrucciones: 'Inter' o 'Public Sans' (Medium 500, tamano 18px-20px)
+
+================================================================================
+FIN DE GUIA SIMPLIFICADA
+================================================================================
