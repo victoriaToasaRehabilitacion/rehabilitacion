@@ -173,17 +173,26 @@
       font-weight: 800;
       font-size: 11px;
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .about-icon {
+      width: 22px;
+      height: 22px;
+      display: block;
+      flex-shrink: 0;
     }
 
     @media(max-width: 400px) {
       .iconbtn.about-btn {
         width: 48px;
         padding: 0;
-        font-size: 0;
       }
-      .iconbtn.about-btn::before {
-        content: "ℹ️";
-        font-size: 20px;
+      .about-label {
+        display: none;
       }
     }
 
@@ -1621,7 +1630,7 @@
           <img src="assets/logo_text.png" alt="Movify Senior" class="logo-img">
         </div>
         <div class="topbar-actions">
-          <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior">ACERCA DE</button>
+          <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior"><img src="assets/icon_acerca_de.svg" alt="" class="about-icon"><span class="about-label">ACERCA DE</span></button>
           <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
         </div>
       </header>
@@ -1696,7 +1705,7 @@
             <img src="assets/logo_text.png" alt="Movify Senior" class="logo-img">
           </div>
           <div class="topbar-actions">
-            <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior">ACERCA DE</button>
+            <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior"><img src="assets/icon_acerca_de.svg" alt="" class="about-icon"><span class="about-label">ACERCA DE</span></button>
             <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
           </div>
         </header>

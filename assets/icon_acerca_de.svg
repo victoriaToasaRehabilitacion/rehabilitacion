@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="infoSphere" cx="38%" cy="28%" r="80%">
+      <stop offset="0%" stop-color="#CDEBFF"/>
+      <stop offset="55%" stop-color="#4FA3F7"/>
+      <stop offset="100%" stop-color="#1D6FE0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="32" cy="33" r="27" fill="url(#infoSphere)" stroke="#1558B8" stroke-width="2"/>
+
+  <path d="M15 20 C19 14, 26 11, 33 10.5" fill="none" stroke="#EAF5FF" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+
+  <g stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" opacity="0.95">
+    <line x1="12" y1="24" x2="18.5" y2="28.5"/>
+    <line x1="10.5" y1="35" x2="17" y2="35"/>
+    <line x1="45.5" y1="28.5" x2="52" y2="24"/>
+    <line x1="47" y1="35" x2="53.5" y2="35"/>
+  </g>
+
+  <circle cx="32" cy="21" r="6" fill="#FFFFFF"/>
+  <rect x="26.5" y="29" width="11" height="24" rx="5.5" fill="#FFFFFF"/>
+</svg>
