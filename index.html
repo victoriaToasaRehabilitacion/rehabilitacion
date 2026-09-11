@@ -160,6 +160,14 @@
       color: #DC2626;
       font-weight: 800;
       font-size: 15px;
+      padding: 3px;
+    }
+
+    .sos-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     .topbar-actions {
@@ -2281,7 +2289,7 @@
         </div>
         <div class="topbar-actions">
           <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior"><img src="assets/icon_acerca_de.svg" alt="" class="about-icon"><span class="about-label">ACERCA DE</span></button>
-          <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
+          <button class="iconbtn sos-btn" onclick="go('emergency')" title="Emergencia SOS"><img src="assets/icon_sos.svg" alt="SOS" class="sos-icon"></button>
         </div>
       </header>
     `;
@@ -2356,7 +2364,7 @@
           </div>
           <div class="topbar-actions">
             <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior"><img src="assets/icon_acerca_de.svg" alt="" class="about-icon"><span class="about-label">ACERCA DE</span></button>
-            <button class="iconbtn sos-btn" onclick="go('emergency')">SOS</button>
+            <button class="iconbtn sos-btn" onclick="go('emergency')" title="Emergencia SOS"><img src="assets/icon_sos.svg" alt="SOS" class="sos-icon"></button>
           </div>
         </header>
 

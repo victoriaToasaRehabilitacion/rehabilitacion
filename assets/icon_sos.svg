@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="sosGlow" cx="50%" cy="58%" r="50%">
+      <stop offset="0%" stop-color="#FFD54A"/>
+      <stop offset="45%" stop-color="#FF7A45"/>
+      <stop offset="100%" stop-color="#E42C2C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sosDome" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B6B"/>
+      <stop offset="55%" stop-color="#E31B1B"/>
+      <stop offset="100%" stop-color="#A80000"/>
+    </linearGradient>
+  </defs>
+
+  <g fill="#E31B1B" opacity="0.95">
+    <polygon points="14,16 3,7 17,21"/>
+    <polygon points="10,30 0,30 12,25"/>
+    <polygon points="14,44 3,53 17,39"/>
+    <polygon points="50,16 61,7 47,21"/>
+    <polygon points="54,30 64,30 52,25"/>
+    <polygon points="50,44 61,53 47,39"/>
+  </g>
+
+  <ellipse cx="32" cy="52" rx="21" ry="7" fill="#20080A"/>
+  <rect x="14" y="42" width="36" height="12" rx="4" fill="#2A0E10"/>
+
+  <path d="M14 42 V30 C14 15, 22 6, 32 6 C42 6, 50 15, 50 30 V42 Z" fill="url(#sosDome)" stroke="#8E0000" stroke-width="1.5"/>
+  <circle cx="32" cy="31" r="15" fill="url(#sosGlow)"/>
+  <path d="M18 22 C21 13, 27 8, 33 7" fill="none" stroke="#FFE3E3" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+
+  <text x="32" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="13" fill="#FFFFFF" stroke="#8E0000" stroke-width="0.6">SOS</text>
+</svg>
