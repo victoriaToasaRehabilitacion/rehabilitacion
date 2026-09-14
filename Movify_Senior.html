@@ -2892,6 +2892,53 @@
     toast(`Diagnóstico actualizado para ${p.name}`);
   }
 
+  /* Modal para Prescribir Ejercicios (Doctor) */
+  function openPrescribeModal(patientId) {
+    const p = state.patients.find(x => x.id === patientId);
+    if (!p) return;
+
+    openSheet(`
+      <h2 style="font-family:var(--font-title);font-size:20px;margin-bottom:6px;color:var(--azul-profundo)">Prescribir Ejercicios</h2>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Asigna una rutina específica para <b>${p.name}</b> según su progreso y estado físico.</p>
+
+      <div class="field" style="margin-bottom: 12px; text-align: left;">
+        <label style="font-size: 12px; font-weight: 700; color: var(--azul-profundo); margin-bottom: 4px; display: block;">Tipo de Rutina</label>
+        <select id="prescribe_type_input" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; background: #fff;">
+          <option value="Calentamiento">Calentamiento Suave</option>
+          <option value="Equilibrio">Equilibrio y Coordinación</option>
+          <option value="Movilidad">Movilidad Articular</option>
+          <option value="Fuerza">Fuerza y Destreza</option>
+          <option value="Rumbaterapia">Rumbaterapia en Silla</option>
+        </select>
+      </div>
+
+      <div class="field" style="margin-bottom: 12px; text-align: left;">
+        <label style="font-size: 12px; font-weight: 700; color: var(--azul-profundo); margin-bottom: 4px; display: block;">Nivel de Intensidad</label>
+        <select id="prescribe_intensity_input" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; background: #fff;">
+          <option value="Baja">Baja (Sin impacto)</option>
+          <option value="Media">Media (Leve resistencia)</option>
+        </select>
+      </div>
+
+      <div class="field" style="margin-bottom: 12px; text-align: left;">
+        <label style="font-size: 12px; font-weight: 700; color: var(--azul-profundo); margin-bottom: 4px; display: block;">Notas adicionales del doctor (opcional)</label>
+        <textarea id="prescribe_notes_input" rows="3" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; background: #fff;" placeholder="Ej. Prestar atención a la rodilla derecha"></textarea>
+      </div>
+
+      <button class="btn btn-vitalidad" style="width:100%;margin-top:20px" onclick="savePrescription('${p.id}')">
+        Enviar Prescripción a ${p.name.split(' ')[0]}
+      </button>
+    `);
+  }
+
+  function savePrescription(patientId) {
+    const p = state.patients.find(x => x.id === patientId);
+    if (!p) return;
+    const type = document.getElementById("prescribe_type_input").value;
+    closeSheet();
+    toast("Rutina de " + type + " asignada a " + p.name);
+  }
+
   /* ----------------------------------------------------------------
      8. DASHBOARD DEL MÉDICO (PACIENTES DONDE ESTÁ ASIGNADO)
      ---------------------------------------------------------------- */
