@@ -2991,7 +2991,7 @@
                       </label>
                     </div>
 
-                    <button class="btn btn-vitalidad btn-sm" style="width:100%" onclick="toast('Prescripción abierta para '+${JSON.stringify(p.name)})">
+                    <button class="btn btn-vitalidad btn-sm" style="width:100%" onclick="openPrescribeModal('${p.id}')">
                       Prescribir Ejercicios
                     </button>
                   </div>
@@ -3500,6 +3500,8 @@
   window.pickRandomProfiles = pickRandomProfiles;
   window.toggleDemoMode = toggleDemoMode;
   window.DEMO_CONFIG = DEMO_CONFIG;
+  window.openPrescribeModal = openPrescribeModal;
+  window.savePrescription = savePrescription;
   window.openRumbaterapiaModal = openRumbaterapiaModal;
   window.closeRumbaterapiaModal = closeRumbaterapiaModal;
   window.switchRumbaVideo = switchRumbaVideo;
