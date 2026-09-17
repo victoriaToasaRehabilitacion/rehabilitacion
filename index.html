@@ -208,6 +208,35 @@
       }
     }
 
+    .iconbtn.install-btn {
+      width: auto;
+      padding: 0 12px;
+      background: var(--verde-vitalidad-light);
+      border-color: rgba(0, 136, 148, 0.35);
+      color: var(--verde-vitalidad);
+      font-weight: 800;
+      font-size: 11px;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .install-icon {
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    @media(max-width: 400px) {
+      .iconbtn.install-btn {
+        width: 48px;
+        padding: 0;
+      }
+      .install-label {
+        display: none;
+      }
+    }
+
     .content {
       padding: 22px 20px;
       max-width: 960px;
@@ -2402,6 +2431,7 @@
           </div>
           <div class="topbar-actions">
             <button class="iconbtn about-btn" onclick="openAboutModal()" title="Acerca de Movify Senior"><img src="assets/icon_acerca_de.svg" alt="" class="about-icon"><span class="about-label">ACERCA DE</span></button>
+            <button id="pwa-install-btn" class="iconbtn install-btn" onclick="installPWA()" title="Instalar Movify Senior" style="display:none"><span class="install-icon">📲</span><span class="install-label">INSTALAR</span></button>
             <button class="iconbtn sos-btn" onclick="go('emergency')" title="Emergencia SOS"><img src="assets/icon_sos.svg" alt="SOS" class="sos-icon"></button>
           </div>
         </header>
@@ -2420,10 +2450,6 @@
               <img src="assets/hero_welcome_active.jpg" alt="Personajes activos" style="border-radius:16px;max-height:150px;object-fit:cover">
             </div>
           </div>
-
-          <button id="pwa-install-btn" class="btn btn-vitalidad" style="width:100%;margin-bottom:14px;display:none;align-items:center;justify-content:center;gap:8px" onclick="installPWA()">
-            📲 Instalar Movify Senior en tu dispositivo
-          </button>
 
           <div class="card" style="background:#FFFFFF;border-left:5px solid var(--verde-vitalidad)">
             <div class="row-flex">
