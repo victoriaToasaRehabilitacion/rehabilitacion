@@ -1497,6 +1497,44 @@
   function save() { localStorage.setItem("movifyState_v6", JSON.stringify(state)); }
 
   /* -------------------------------------------------------------
+     INSTALACIÓN COMO APP (PWA) DESDE UN BOTÓN EN INICIO
+     ------------------------------------------------------------- */
+  let deferredInstallPrompt = null;
+  let pwaInstallAvailable = false;
+  const isStandalonePWA = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    pwaInstallAvailable = true;
+    updateInstallButtonVisibility();
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    pwaInstallAvailable = false;
+    updateInstallButtonVisibility();
+    toast("¡Movify Senior instalada en tu dispositivo!");
+  });
+
+  function updateInstallButtonVisibility() {
+    const btn = document.getElementById("pwa-install-btn");
+    if (btn) btn.style.display = (pwaInstallAvailable && !isStandalonePWA) ? "flex" : "none";
+  }
+
+  async function installPWA() {
+    if (!deferredInstallPrompt) {
+      return toast("Busca \"Instalar app\" o \"Agregar a pantalla de inicio\" en el menú de tu navegador");
+    }
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    pwaInstallAvailable = false;
+    updateInstallButtonVisibility();
+    if (choice.outcome === "accepted") toast("Instalando Movify Senior...");
+  }
+
+  /* -------------------------------------------------------------
      SISTEMA DE RETROALIMENTACIÓN HÁPTICA Y SONIDO DE BURBUJA
      ------------------------------------------------------------- */
   let audioCtx = null;
@@ -2383,6 +2421,10 @@
             </div>
           </div>
 
+          <button id="pwa-install-btn" class="btn btn-vitalidad" style="width:100%;margin-bottom:14px;display:none;align-items:center;justify-content:center;gap:8px" onclick="installPWA()">
+            📲 Instalar Movify Senior en tu dispositivo
+          </button>
+
           <div class="card" style="background:#FFFFFF;border-left:5px solid var(--verde-vitalidad)">
             <div class="row-flex">
               <div>
@@ -3071,7 +3113,10 @@
     `;
   }
 
-  function app(html) { document.getElementById("app").innerHTML = html; }
+  function app(html) {
+    document.getElementById("app").innerHTML = html;
+    updateInstallButtonVisibility();
+  }
 
   function render() {
     const r = state.role;
@@ -3549,6 +3594,7 @@
   window.DEMO_CONFIG = DEMO_CONFIG;
   window.openPrescribeModal = openPrescribeModal;
   window.savePrescription = savePrescription;
+  window.installPWA = installPWA;
   window.openRumbaterapiaModal = openRumbaterapiaModal;
   window.closeRumbaterapiaModal = closeRumbaterapiaModal;
   window.switchRumbaVideo = switchRumbaVideo;
